@@ -2,10 +2,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-from base.base_model import BaseModel  # Assuming a base model class is defined
-from config import Config  # Assuming configuration settings are defined
+from base.base_model import BaseModel
+from config import Config
 from torchvision.models import resnet18
-from psg_dataset import PSG_Dataset  # Assuming a PSG dataset class is defined
+from psg_dataset import PSG_Dataset
 from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 

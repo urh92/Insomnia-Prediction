@@ -6,7 +6,7 @@ from scipy.signal import resample_poly, iirfilter, sosfiltfilt
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 
-# Function to edit the first line of a file, presumably to clean or modify the header
+# Function to edit the header of EDF files that are not EDF compliant and cannot be opened with pyedflib
 def edit_file(fid):
     lines = fid.readlines()  # Read all lines from the file
     header = bytearray(lines[0])  # Convert the first line (header) into a mutable bytearray
@@ -16,7 +16,6 @@ def edit_file(fid):
     header = header.replace(b'\xb0', b'?')
     header = bytes(header)  # Convert bytearray back to bytes (immutable)
     lines[0] = header  # Update the first line with the modified header
-
     return lines  # Return the modified lines
 
 # Function to correct units of measurement to a consistent format
@@ -28,7 +27,6 @@ def correct_units(unit_string):
         g = 1.0  # Volts remain unchanged
     else:
         g = 1.0  # Default case, no change
-
     return g  # Return the conversion factor
 
 # Function to resample a signal to a desired frequency

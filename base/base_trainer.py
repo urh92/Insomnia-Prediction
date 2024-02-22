@@ -32,8 +32,7 @@ class BaseTrainer(object):
         self.network.to(self.device)
         self.optimizer = torch.optim.Adam(
             [{'params': [p for name, p in self.network.named_parameters() if 'weight' in name], 'weight_decay': self.l2},
-             {'params': [p for name, p in self.network.named_parameters() if 'weight' not in name], 'weight_decay': 0}],
-            lr=self.lr)
+             {'params': [p for name, p in self.network.named_parameters() if 'weight' not in name], 'weight_decay': 0}], lr=self.lr)
 
         # Load optimizer state if resuming
         if self.resume:

@@ -1,6 +1,6 @@
-# Import necessary modules from joblib and tqdm
-from joblib import Parallel, delayed  # joblib provides easy parallel computing
-from tqdm import tqdm  # tqdm is a library for displaying progress bars
+# Import necessary modules
+from joblib import Parallel, delayed
+from tqdm import tqdm
 
 # Define a dictionary mapping progress bar types to their corresponding functions
 all_bar_funcs = {

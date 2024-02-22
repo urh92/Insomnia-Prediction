@@ -1,6 +1,8 @@
+# Import necessary libraries
 import datetime
 import numpy as np
 
+# Define all possible channel names in the BioSerenity dataset
 channel_alias = {'F3': ['F3M2', 'F3A2', 'F3-M2', 'EEG F3-A2', 'FZM2', 'FZA2', 'FP1M2', 'FP1A2', 'F7M2', 'F7A2', 'F3:M2'],
                  'F4': ['F4M1', 'F4A1', 'F4-M1', 'EEG F4-A1', 'FZM2', 'FZA2', 'FP2M1', 'FP2A1', 'F8M1', 'F8A1', 'F4:M1'],
                  'C3': ['C3M2', 'C3A2', 'C3-M2', 'EEG C3-A2', 'C3M1', 'CZM2', 'C3:M2'],
@@ -36,12 +38,7 @@ channel_alias = {'F3': ['F3M2', 'F3A2', 'F3-M2', 'EEG F3-A2', 'FZM2', 'FZA2', 'F
                  'CO2': ['CO2', 'pCo2', 'EtCO2', 'ECO2', 'EtCO', 'CO2_Flow', 'tCO2', 'mmHG', 'mmHg']
                  }
 
-outlier_channels = ['ECG IIHF', 'Heart Rate_CU', 'Heart Rate_DR', 'SpO2-Quality_CU', 'SpO2-Quality_DR', 'Flow_CU',
-                    'Snore_CU', 'Snore_DR', 'Phase_CU', 'Phase_DR', 'RMI_CU', 'RR_CU', 'XSum_CU', 'Tidal Volume_CU',
-                    'XFlow_CU', 'XFlow_DR', 'REF', 'Light_CU', 'Gravity X', 'Gravity Y', 'Activity_CU', 'Elevation_CU',
-                    'Position_CU', 'T3-M2', 'T3A2', 'T5M2', 'T5A2', 'T4-M1', 'T4A1', 'T6M1', 'T6A1', 'P3A2', 'P3M2',
-                    'PZM1', 'P4A1', 'P4M1', 'PZM1', 'RI', 'R-Trig']
-
+# Define all possible channel names of unreferenced channels
 unref_channel_alias = {'F3': ['F3'],
                        'F4': ['F4'],
                        'C3': ['C3'],
@@ -77,6 +74,7 @@ unref_channel_alias = {'F3': ['F3'],
                        'CO2': []
                        }
 
+# Define all possible channel names of reference channels
 ref_channel_alias = {'F3': ['M2'],
                      'F4': ['M1'],
                      'C3': ['M2'],
@@ -112,6 +110,7 @@ ref_channel_alias = {'F3': ['M2'],
                      'CO2': []
                      }
 
+# Define all possible names of channel units
 channel_units_alias = {'F3': 'uV',
                  'F4': 'uV',
                  'C3': 'uV',
@@ -147,6 +146,7 @@ channel_units_alias = {'F3': 'uV',
                  'CO2': 'mmHg'
                  }
 
+# Convert all units that are spelled differently to the same convention
 unit_alias = {'uV': ['uV', 'u'],
          'mV': ['mV', 'm'],
          'cmH2O': ['cmH20', 'cmH2O', 'CmH20', 'CmH2O', 'cm H2O', 'cm'],
@@ -154,7 +154,10 @@ unit_alias = {'uV': ['uV', 'u'],
          'bpm': ['bmp', 'bpm', 'Bpm'],
          'mmHg': ['mmHg', 'mmHG']}
 
+# Desired sampling frequencies for each channel
 des_fs = {'F3': 128, 'F4': 128, 'C3': 128, 'C4': 128, 'O1': 128, 'O2': 128, 'LEOG': 128, 'REOG': 128, 'Chin': 128,
           'ECG': 128}
+
+# Highpass filter cut-off frequencies 
 hp_fs = {'F3': [0.3, 45.0], 'F4': [0.3, 45.0], 'C3': [0.3, 45.0], 'C4': [0.3, 45.0], 'O1': [0.3, 45.0],
          'O2': [0.3, 45.0], 'LEOG': [0.3, 45.0], 'REOG': [0.3, 45.0], 'Chin': 10.0, 'ECG': 0.3}

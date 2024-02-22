@@ -1,26 +1,19 @@
-# Import necessary libraries and modules for the project
-import os  # Provides a way of using operating system dependent functionality
-from config import Config  # Import Config class from a local module for configuration settings
-import h5py  # Interface to the HDF5 binary data format
-import numpy as np  # Fundamental package for scientific computing with Python
-import pandas as pd  # Data analysis and manipulation tool
-import torch  # Open source machine learning library
-from torch.utils import data  # Utilities for data loading
-from tqdm import tqdm  # Instantly makes loops show a smart progress meter
-from base.base_trainer import BaseTrainer  # Import BaseTrainer class for training abstraction
-from utils.util_am import am_model  # Utility for activation maximization models
-from torch.utils.data import Dataset, DataLoader  # Dataloader utilities for batch data loading
-from psg_dataset import PSG_Dataset  # Import dataset class for PSG data handling
-from captum.attr import (  # Import model interpretability tools from Captum
-    GradientShap,
-    DeepLift,
-    DeepLiftShap,
-    InputXGradient,
-    IntegratedGradients,
-    NoiseTunnel,
-)
-from utils.utils_loss import insomnia_loss  # Custom loss function for insomnia classification
-from models import BasicModel  # Basic model class for neural network
+# Import necessary libraries
+import os
+from config import Config
+import h5py
+import numpy as np
+import pandas as pd
+import torch
+from torch.utils import data
+from tqdm import tqdm
+from base.base_trainer import BaseTrainer
+from utils.util_am import am_model
+from torch.utils.data import Dataset, DataLoader
+from psg_dataset import PSG_Dataset
+from captum.attr import (GradientShap, DeepLift, DeepLiftShap, InputXGradient, IntegratedGradients, NoiseTunnel)
+from utils.utils_loss import insomnia_loss
+from models import BasicModel
 
 # Define the Trainer class, inheriting from BaseTrainer, to handle the training process
 class Trainer(BaseTrainer):
@@ -300,7 +293,6 @@ class Trainer(BaseTrainer):
                 output_filename = os.path.join(self.config.F_train_dir, record)
                 with h5py.File(output_filename, "w") as f:
                     # Add datasets
-#                    f.create_dataset("PSG", data=np.vstack(feature_dict[record]['feat']), dtype='f4')
                     f.create_dataset("insomnia_p", data=np.stack(feature_dict[record]['insomnia_p']), dtype='f4')
                     # Attributes
                     for key_a, v in feature_dict[record]['attrs'].items():
@@ -363,7 +355,6 @@ class Trainer(BaseTrainer):
         self.best_network.eval()
         self.best_network.LSTM.training = True
         self.best_network.return_only_pred = True
-        # self.best_network.dropout.p = 0.0
 
         if atr_method == 'int_grad':
             i_model = IntegratedGradients(self.best_network)
@@ -466,7 +457,7 @@ class Trainer(BaseTrainer):
         attribution = y_occ_all - y.detach().clone().unsqueeze(2).repeat(1, len(occ_set), 128 * 60 * 5)
         return attribution, torch.zeros_like(x)
 
-# Main code block that sets up the configuration, model, dataset, and triggers the training process
+# Main code block that sets up the configuration, model, dataset, and starts the training process
 if __name__ == '__main__':
     config = Config()  # Load the configuration settings
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # Set the computing device
